@@ -1,0 +1,4 @@
+profile.yaml
+.env
+__pycache__/
+venv/

@@ -1,0 +1,152 @@
+# ============================================================================
+# jobagent config — copy to config/profile.yaml and edit.
+#
+# Everything under `profile:` is the ONLY source of facts the agent may put on
+# a resume. If it isn't here, it will not be claimed. Be thorough, and be
+# accurate about scope — write "contributed to" if you contributed to it,
+# because the drift checker compares the output against exactly these words.
+# ============================================================================
+
+profile:
+  name: "Your Name"
+  email: "you@example.com"
+  phone: "+49 ..."
+  location: "Weimar, Thüringen"
+  links:
+    github: "https://github.com/yourhandle"
+    linkedin: "https://linkedin.com/in/yourhandle"
+
+  summary: >
+    Computer science student in Weimar. Practical work in applied machine
+    learning: object detection pipelines, fine-tuning open-weight language
+    models, and the data plumbing around both. Looking for a Werkstudent
+    position in ML or data engineering.
+
+  skills:
+    - Python
+    - PyTorch
+    - YOLOv8
+    - Hugging Face Transformers
+    - Mistral
+    - GPT-2
+    - Git
+    - Docker
+    - SQL
+    - pandas
+    - NumPy
+    - Linux
+
+  experience:
+    # Be precise about your actual role. "Built" vs "contributed to" vs
+    # "helped with" is the difference between a defensible resume and an
+    # awkward interview. The drift checker flags escalation, but only if the
+    # honest version is written here first.
+    - title: "Student Project — Object Detection"
+      company: "University coursework"
+      start: "2025-10"
+      end: "2026-02"
+      location: "Weimar"
+      tech: ["Python", "PyTorch", "YOLOv8", "OpenCV"]
+      bullets:
+        - "Built a YOLOv8 detection pipeline for a custom annotated dataset"
+        - "Handled annotation, augmentation, training and evaluation end to end"
+        - "Compared model sizes and documented the accuracy/latency tradeoff"
+
+    - title: "Personal Project — Language Model Fine-tuning"
+      company: "Self-directed"
+      start: "2025-04"
+      end: "2025-09"
+      location: "Weimar"
+      tech: ["Python", "Hugging Face", "GPT-2", "Mistral"]
+      bullets:
+        - "Fine-tuned GPT-2 and Mistral on a domain-specific text corpus"
+        - "Built the data cleaning and tokenization pipeline"
+        - "Evaluated outputs against a held-out set and documented failure modes"
+
+  education:
+    - degree: "B.Sc. Computer Science (in progress)"
+      school: "Bauhaus-Universität Weimar"
+      year: "expected 2027"
+      detail: ""
+
+  preferences:
+    titles:
+      - "Werkstudent Machine Learning"
+      - "Werkstudent Data Science"
+      - "Werkstudent Softwareentwicklung"
+      - "Working Student Machine Learning"
+      - "Praktikum Data Engineering"
+    locations: ["Weimar", "Jena", "Erfurt", "Thüringen", "Remote"]
+    remote_ok: true
+    onsite_ok: true
+    min_salary: null
+    currency: "EUR"
+    seniority: []                 # Werkstudent roles rarely carry a seniority token
+    exclude_keywords: ["unbezahlt", "unpaid", "commission only"]
+    exclude_companies: []
+    must_have_keywords: []
+    work_authorization: "Enrolled student in Germany — Werkstudent eligible"
+    notice_period: "Available from <month>"
+
+  standard_answers:
+    "Are you enrolled as a student?": "Yes, B.Sc. Computer Science at Bauhaus-Universität Weimar."
+    "How many hours per week are you available?": "Up to 20 hours during the semester."
+    "What is your German level?": "A2, currently working toward B1."
+    "Why are you interested in this role?": "NEEDS_USER_INPUT"
+
+# ============================================================================
+settings:
+  model: "claude-sonnet-4-6"
+  output_dir: "out"
+  db_path: "out/jobagent.sqlite3"
+
+  # ---- Language. Read this section carefully. -----------------------------
+  #
+  # "en" is a completely normal choice for engineering Werkstudent roles and
+  # is the safe default. If you set "de", you MUST set language_level_cap to
+  # the level you can actually hold a conversation at. A C1 Motivationsschreiben
+  # that earns an interview you can't conduct in German is worse than a plain
+  # B1 letter that gets you the same interview honestly.
+  cover_letter_language: "en"        # "en" or "de"
+  language_level_cap: null           # e.g. "A2" or "B1" — required when using "de"
+
+  # ---- Volume. Sized for a real search, not a spray campaign. -------------
+  max_rank: 25                       # postings scored per run
+  min_heuristic: 0.35                # floor before a posting costs a token
+  rank_workers: 3
+  max_tailor: 5                      # full packages drafted per run
+  min_fit_to_tailor: 68
+
+  # ---- Semantic matching (optional, local, free) --------------------------
+  # Off by default. When off, ranking is lexical overlap + LLM judgment —
+  # describe it that way if you describe it to anyone.
+  # Turn on with: pip install sentence-transformers
+  use_semantic_ranking: false
+  embedding_model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  semantic_weight: 0.4
+
+  # ---- Where to look ------------------------------------------------------
+  sources:
+    # The one that actually covers Thuringia. Format: "what|where|radius_km"
+    arbeitsagentur:
+      - "Werkstudent Informatik|Weimar|40"
+      - "Werkstudent Data Science|Jena|40"
+      - "Werkstudent Softwareentwicklung|Erfurt|40"
+      - "Praktikum Machine Learning|Jena|50"
+
+    # Startups with public boards. Fewer Werkstudent roles, but worth watching.
+    greenhouse: []
+    lever: []
+    ashby: []
+
+    remotive:
+      - "machine learning intern"
+      - "working student data"
+
+    # Postings you found yourself and exported by hand.
+    # local:
+    #   - examples/sample_jobs.json
+
+# Note: there is no `automation:` block. Auto-submit does not exist in this
+# tool. `apply --mode prep` prints a paste-ready sheet; `--mode assist` fills a
+# visible browser form and stops. Neither one presses submit.
