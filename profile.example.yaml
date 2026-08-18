@@ -11,7 +11,7 @@ profile:
   name: "Your Name"
   email: "you@example.com"
   phone: "+49 ..."
-  location: "Weimar, Thüringen"
+  location: "your location"
   links:
     github: "https://github.com/yourhandle"
     linkedin: "https://linkedin.com/in/yourhandle"
@@ -45,7 +45,7 @@ profile:
       company: "University coursework"
       start: "2025-10"
       end: "2026-02"
-      location: "Weimar"
+      location: "your city"
       tech: ["Python", "PyTorch", "YOLOv8", "OpenCV"]
       bullets:
         - "Built a YOLOv8 detection pipeline for a custom annotated dataset"
